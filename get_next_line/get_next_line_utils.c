@@ -14,17 +14,13 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*result;
-	size_t	aux;
+	char	*ptr;
 
-	aux = nmemb * size;
-	if (nmemb != aux / size)
-		return (NULL);
-	result = malloc(aux);
-	if (!result)
-		return (NULL);
-	ft_bzero(result, aux);
-	return (result);
+	ptr = (void *)malloc(nmemb * size);
+	if (!ptr)
+		return (0);
+	ft_memset(ptr, 0, (nmemb * size));
+	return (ptr);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -76,18 +72,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (bigstr);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t	i;
 	char	*aux;
 
-	aux = s;
 	i = 0;
+	aux = s;
 	while (i < n)
 	{
-		aux[i] = '\0';
+		aux[i] = c;
 		i++;
 	}
+	return (s);
 }
 
 size_t	ft_strlen(const char *s)
