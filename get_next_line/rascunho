@@ -1,0 +1,60 @@
+static char	*delsubstr(char *str, size_t indx1, size_t indx2)
+{
+	size_t	i;
+	char	*result;
+
+	if (indx1 > indx2)
+	{
+		i = indx1;
+		indx1 = indx2;
+		indx2 = i;
+	}
+	i = (ft_strlen(str) + 1) - (indx2 - indx1 + 1);
+	result = malloc(sizeof(char) * i);
+	i = 0;
+	while (i < indx1)
+	{
+		result[i] = str[i];
+		i++;
+	}
+	indx2++;
+	while (str[indx2])
+		result[i++] = str[indx2++];
+	result[i] = '\0';
+	return (result);
+}
+
+size_t		i;
+
+while (str[i] != '\n' && str[i])
+		i++;
+	str = delsubstr(str, 0, i);
+	
+	
+	
+static char	*read_file(int fd, char *str)
+{
+	char	*aux;
+	ssize_t	return_read;
+
+	if (!str)
+	{
+		str = malloc(1);
+		str[0] = '\0';
+	}
+	aux = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	return_read = read(fd, aux, BUFFER_SIZE);
+	if (return_read == -1)
+	{
+		free(aux);
+		return (NULL);
+	}
+	str = ft_strjoin(str, aux);
+	if (ft_strchr(str, '\n') == NULL && return_read != 0)
+	{
+		aux = malloc(1 * sizeof(char));
+		return (ft_strjoin(str, read_file(fd, aux)));
+	}
+	free(aux);
+	return (str);
+}

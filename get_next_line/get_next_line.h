@@ -6,7 +6,7 @@
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:17:53 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/22 17:18:28 by luaraujo         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:54:48 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@
 # endif
 
 char	*get_next_line(int fd);
-void	*ft_calloc(size_t nmemb, size_t size);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
-void	*ft_memset(void *s, int c, size_t n);
-size_t	ft_strlen(const char *s);
+size_t	ft_strlen(char *s);
 
 #endif
