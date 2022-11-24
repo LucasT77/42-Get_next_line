@@ -6,7 +6,7 @@
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:17:40 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/23 17:07:21 by luaraujo         ###   ########.fr       */
+/*   Updated: 2022/11/24 17:07:02 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,44 +36,32 @@ char	*ft_strchr(char *s, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	len1;
-	size_t	len2;
 	size_t	i;
+	size_t	n;
 	char	*bigstr;
 
 	if (!s1)
-	{
-		s1 = malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
+		s1 = ft_calloc(1, sizeof(char));
 	if (!s1 || !s2)
 		return (0);
-	len1 = 0;
-	len2 = 0;
-	while (s1[len1])
-		len1++;
-	while (s2[len2])
-		len2++;
-	bigstr = malloc(sizeof(char) * (len1 + len2 + 1));
+	bigstr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!bigstr)
 		return (NULL);
 	i = 0;
-	while (i < len1)
+	while (s1[i])
 	{
 		bigstr[i] = s1[i];
 		i++;
 	}
-	while (i < len1 + len2)
-	{
-		bigstr[i] = s2[i - len1];
-		i++;
-	}
+	n = 0;
+	while (s2[n])
+		bigstr[i++] = s2[n++];
 	bigstr[i] = '\0';
 	free(s1);
 	return (bigstr);
 }
 
-/*size_t	ft_strlen(char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
@@ -84,4 +72,29 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	return (i);
 }
-*/
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*ptr;
+
+	ptr = (void *)malloc(nmemb * size);
+	if (!ptr)
+		return (0);
+	ft_memset(ptr, 0, (nmemb * size));
+	return (ptr);
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t	i;
+	char	*aux;
+
+	i = 0;
+	aux = s;
+	while (i < n)
+	{
+		aux[i] = c;
+		i++;
+	}
+	return (s);
+}

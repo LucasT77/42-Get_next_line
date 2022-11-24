@@ -6,7 +6,7 @@
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:17:17 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/23 17:38:33 by luaraujo         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:24:24 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ static char	*delsubstr(char *str)
 	size_t	len;
 	char	*result;
 
-	len = 0;
-	while (str[len])
-		len++;
+	len = ft_strlen(str);
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (!str[i])
-		return(0);
+	{
+		free(str);
+		return (0);
+	}
 	result = malloc(sizeof(char) * (len + 1 - i));
 	n = 0;
 	i++;
@@ -40,32 +41,24 @@ static char	*delsubstr(char *str)
 static char	*get_line(char *str)
 {
 	char	*line;
-	int		i;
+	size_t	i;
 
 	i = 0;
-	if (!str)
+	if (!str[i])
 		return (NULL);
-	while (str[i] != '\n' && str[i] != '\0')
+	while (str[i] != '\n' && str[i])
 		i++;
-	line = malloc((i + 2) * sizeof(char));
-	if (!line)
-		return (NULL);
+	if (str[i] == '\n')
+		i++;
+	line = malloc(sizeof(char) * (i + 1));
 	i = 0;
-	while (str[i] != '\n' && str[i] != '\0')
+	while (str[i] != '\n' && str[i])
 	{
 		line[i] = str[i];
 		i++;
 	}
-	if (str[0] == '\0')
-	{
-		free(str);
-		return (NULL);
-	}
 	if (str[i] == '\n')
-	{
-		line[i] = '\n';
-		i++;
-	}
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
@@ -80,10 +73,10 @@ static char	*read_file(int fd, char *str)
 		str = malloc(1);
 		str[0] = '\0';
 	}
+	aux = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	return_read = 1;
 	while (ft_strchr(str, '\n') == NULL && return_read != 0)
 	{
-		aux = malloc((BUFFER_SIZE + 1) * sizeof(char));
 		return_read = read(fd, aux, BUFFER_SIZE);
 		if (return_read == -1)
 		{
@@ -92,8 +85,8 @@ static char	*read_file(int fd, char *str)
 		}
 		aux[return_read] = '\0';
 		str = ft_strjoin(str, aux);
-		free(aux);
 	}
+	free(aux);
 	return (str);
 }
 
@@ -111,7 +104,6 @@ char	*get_next_line(int fd)
 	str = delsubstr(str);
 	return (line);
 }
-
 
 int	main(void)
 {
