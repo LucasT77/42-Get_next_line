@@ -58,3 +58,36 @@ static char	*read_file(int fd, char *str)
 	free(aux);
 	return (str);
 }
+
+static char	*get_line(char *str)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i] != '\n' && str[i] != '\0')
+		i++;
+	line = malloc((i + 2) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (str[i] != '\n' && str[i] != '\0')
+	{
+		line[i] = str[i];
+		i++;
+	}
+	if (str[0] == '\0')
+	{
+		free(str);
+		return (NULL);
+	}
+	if (str[i] == '\n')
+	{
+		line[i] = '\n';
+		i++;
+	}
+	line[i] = '\0';
+	return (line);
+}
