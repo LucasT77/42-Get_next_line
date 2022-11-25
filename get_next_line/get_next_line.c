@@ -6,7 +6,7 @@
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:17:17 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/25 12:17:40 by luaraujo         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:18:48 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	*get_next_line(int fd)
 int	main(void)
 {
 	int		fd;
+	int		fd1;
 	char	*line;
 	int		i;
 
@@ -122,6 +123,16 @@ int	main(void)
 		i++;
 	}
 	close(fd);
+	i = 0;
+	fd1 = open("../test3.txt", O_RDONLY);
+	while (i < 25)
+	{
+		line = get_next_line(fd1);
+		printf("line[%d]: %s\n", (i + 1), line);
+		free(line);
+		i++;
+	}
+	close(fd1);
 	return (0);
 }
 */

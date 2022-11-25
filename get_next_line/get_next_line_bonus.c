@@ -6,7 +6,7 @@
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:54:59 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/25 12:17:14 by luaraujo         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:18:41 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*get_next_line(int fd)
 	static char	*str[2000];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1999)
 		return (NULL);
 	str[fd] = read_file(fd, str[fd]);
 	if (!str[fd])
@@ -112,22 +112,37 @@ int	main(void)
 	char	*line1;
 	int		fd2;
 	char	*line2;
+	int		fd3;
+	char	*line3;
+	int		fd4;
+	char	*line4;
 	int		i;
 
 	fd1 = open("../test1.txt", O_RDONLY);
 	fd2 = open("../test2.txt", O_RDONLY);
+	fd3 = open("../test3.txt", O_RDONLY);
+	fd4 = open("../test4.txt", O_RDONLY);
 	i = 0;
 	while (i < 25)
 	{
 		line1 = get_next_line(fd1);
 		line2 = get_next_line(fd2);
+		line3 = get_next_line(fd3);
+		line4 = get_next_line(fd4);
 		printf("test1_line[%d]: %s\n", (i + 1), line1);
 		printf("test2_line[%d]: %s\n", (i + 1), line2);
+		printf("test3_line[%d]: %s\n", (i + 1), line3);
+		printf("test4_line[%d]: %s\n", (i + 1), line4);
 		free(line1);
 		free(line2);
+		free(line3);
+		free(line4);
 		i++;
 	}
 	close(fd1);
+	close(fd2);
+	close(fd3);
+	close(fd4);
 	return (0);
 }
 */
