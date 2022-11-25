@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luaraujo <luaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 14:17:17 by luaraujo          #+#    #+#             */
-/*   Updated: 2022/11/25 12:17:40 by luaraujo         ###   ########.fr       */
+/*   Created: 2022/11/25 11:54:59 by luaraujo          #+#    #+#             */
+/*   Updated: 2022/11/25 12:17:14 by luaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*delsubstr(char *str)
 {
@@ -92,36 +92,42 @@ static char	*read_file(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[2000];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = read_file(fd, str);
-	if (!str)
+	str[fd] = read_file(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	line = get_line(str);
-	str = delsubstr(str);
+	line = get_line(str[fd]);
+	str[fd] = delsubstr(str[fd]);
 	return (line);
 }
 
 /*
 int	main(void)
 {
-	int		fd;
-	char	*line;
+	int		fd1;
+	char	*line1;
+	int		fd2;
+	char	*line2;
 	int		i;
 
-	fd = open("../test1.txt", O_RDONLY);
+	fd1 = open("../test1.txt", O_RDONLY);
+	fd2 = open("../test2.txt", O_RDONLY);
 	i = 0;
 	while (i < 25)
 	{
-		line = get_next_line(fd);
-		printf("line[%d]: %s\n", (i + 1), line);
-		free(line);
+		line1 = get_next_line(fd1);
+		line2 = get_next_line(fd2);
+		printf("test1_line[%d]: %s\n", (i + 1), line1);
+		printf("test2_line[%d]: %s\n", (i + 1), line2);
+		free(line1);
+		free(line2);
 		i++;
 	}
-	close(fd);
+	close(fd1);
 	return (0);
 }
 */
